@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Clothing Store</title>
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* CSS for the header */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #333;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin: 0;
+            text-transform: uppercase;
+            /* Convert text to uppercase */
+            letter-spacing: 2px;
+            /* Increase letter spacing */
+        }
+
+        /* CSS for the navigation bar */
+        header nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            /* Change the background color as needed */
+        }
+
+        header nav ul li {
+            float: left;
+        }
+
+        header nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        header nav ul li a:hover {
+            background-color: #ddd;
+            /* Change the background color on hover as needed */
+            color: black;
+        }
+
+        /* CSS for the product container with scrollbar */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            justify-content: space-around;
+            /* Align items with space around */
+            max-height: 70vh;
+            /* Set maximum height */
+            overflow-y: auto;
+            /* Add vertical scrollbar */
+        }
+
+        .product {
+            margin: 10px;
+            text-align: center;
+            width: calc(33.33% - 20px);
+            /* One-third width minus margin */
+            box-sizing: border-box;
+            /* Include padding and border in element's total width and height */
+            background-color: #f9f9f9;
+            /* Light gray background */
+            border-radius: 10px;
+            /* Rounded corners */
+            padding: 20px;
+            /* Increase padding */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Add shadow */
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            cursor: pointer;
+            /* Add cursor pointer for image */
+        }
+
+        .product button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Smooth transition */
+        }
+
+        .product button:hover {
+            background-color: #555;
+            /* Darker background color on hover */
+        }
+
+        /* CSS for the about section */
+        .about-section {
+            background-color: #333;
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 20px;
+            /* Add margin to separate from product container */
+        }
+
+        .about-section p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* CSS for the modal */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* CSS for the search box */
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type=text] {
+            padding: 10px;
+            margin-top: 10px;
+            width: 50%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* Smooth transition */
+        }
+
+        .search-container button:hover {
+            background-color: #555;
+            /* Darker background color on hover */
+        }
+
+        .product-cost p {
+            text-align: center;
+            text-decoration: solid;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- Stylish Header -->
+        <div class="header">
+            <h1>FASHION FUSHION</h1>
+        </div>
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="./pages/products.html">Products</a></li>
+                <!-- Remove About from the navigation bar -->
+                <!-- <li><a href="#">About</a></li> -->
+                <li><a href="./pages/contact.html">Contact</a></li>
+                <li><a href="./pages/cart.html">Cart</a></li> <!-- New Cart link -->
+                <li>
+                    <select id="filterDropdown" onchange="filterProducts()">
+                        <option value="">Filter by...</option>
+                        <option value="category">Category</option>
+                        <option value="price">Price</option>
+                        <option value="popularity">Popularity</option>
+                    </select>
+                </li>
+                <li>
+                    <select id="sortDropdown" onchange="sortProducts()">
+                        <option value="">Sort by...</option>
+                        <option value="ascending">Price: Low to High</option>
+                        <option value="descending">Price: High to Low</option>
+                    </select>
+                </li>
+            </ul>
+        </nav>
+        <!-- Search Box -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button onclick="searchProducts()">Search</button>
+        </div>
+    </header>
+
+    <!-- Product Display Section -->
+    <!-- Product Display Section -->
+    <main>
+        <div class="product-container">
+            <!-- Product Images with Add to Cart buttons -->
+            <div class="product">
+                <img src="https://media.istockphoto.com/id/685779142/photo/red-tshirt-clothes.jpg?s=612x612&w=0&k=20&c=SJfbPSpSMhQtQi4NKDXn6JEf9qQqV-z_97czLZaKAoo="
+                    alt="Clothing 1" onclick="openModal('image1.jpg', 'Product 1 Details', 'Description of Product 1')">
+
+                <p class="product-cost" id="cost1"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToModify()">Modify</button>
+            </div>
+            <div class="product">
+                <img src="https://img.freepik.com/free-photo/white-t-shirts-with-copy-space-gray-background_53876-104920.jpg?w=996&t=st=1712472449~exp=1712473049~hmac=9b50d2db5ce88199c91e8d4aebce1159777cfb0a620526c88202a4059204b535"
+                    alt="Clothing 2" onclick="openModal('image2.jpg', 'Product 2 Details', 'Description of Product 2')">
+                <p class="product-cost" id="cost1"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToModify()">Modify</button>
+            </div>
+            <div class="product">
+                <img src="https://img.freepik.com/premium-photo/blue-t-shirt-white_10541-2420.jpg?w=360"
+                    alt="Clothing 3" onclick="openModal('image3.jpg', 'Product 3 Details', 'Description of Product 3')">
+                <p class="product-cost" id="cost1"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToModify()">Modify</button>
+            </div>
+            <div class="product">
+                <img src="https://img.freepik.com/free-vector/monocolor-midnight-madness-marathon-t-shirt-design_742173-5733.jpg?w=360&t=st=1712472501~exp=1712473101~hmac=d067accc5d0943bcf84c0f0318b577da80277e7ad608ade43fe038c22d13f8e3"
+                    alt="Clothing 4" onclick="openModal('image4.jpg', 'Product 4 Details', 'Description of Product 4')">
+                <p class="product-cost" id="cost1"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToModify()">Modify</button>
+            </div>
+            <div class="product">
+                <img src="https://img.freepik.com/free-vector/simple-music-lover-t-shirt_742173-5177.jpg?w=360&t=st=1712472523~exp=1712473123~hmac=4286f0e73bbdc4ab69cb9b75240dd94c9996ccd4edc04f0c501e920d0c50e1c3"
+                    alt="Clothing 5" onclick="openModal('image5.jpg', 'Product 5 Details', 'Description of Product 5')">
+                <p class="product-cost" id="cost1"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToModify()">Modify</button>
+            </div>
+            <div class="product">
+                <img src="https://img.freepik.com/free-photo/shirt-mockup-concept-with-plain-clothing_23-2149448792.jpg?w=360&t=st=1712472752~exp=1712473352~hmac=2048648542d959d2faa6016f1c67ec8ce822e2d98d343a5c8611dbce74aaea5d"
+                    alt="Clothing 6" onclick="openModal('image6.jpg', 'Product 6 Details', 'Description of Product 6')">
+                <p class="product-cost" id="cost1"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToModify()">Modify</button>
+            </div>
+            <div class="product">
+                <img src="image7.jpg" alt="Clothing 7"
+                    onclick="openModal('image7.jpg', 'Product 7 Details', 'Description of Product 7')">
+                <p class="product-cost" id="cost1"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToModify()">Modify</button>
+            </div>
+            <div class="product">
+                <img src="https://img.freepik.com/premium-photo/casual-blue-mockup-blank-shirt_856660-2796.jpg?w=740"
+                    alt="Clothing 8" onclick="openModal('image8.jpg', 'Product 8 Details', 'Description of Product 8')">
+                <p class="product-cost" id="cost1"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToModify()">Modify</button>
+            </div>
+            <div class="product">
+                <img src="https://img.freepik.com/free-photo/graphic-tshirt-trendy-design-mockup-presented-wooden-hanger_460848-14045.jpg?w=740"
+                    alt="Clothing 9" onclick="openModal('image9.jpg', 'Product 9 Details', 'Description of Product 9')">
+                <p class="product-cost" id="cost"></p>
+                <button onclick="addToCart()">Add to Cart</button>
+                <button onclick="addToModify()">Modify</button>
+            </div>
+            <!-- Add more product images and buttons here -->
+        </div>
+    </main>
+
+
+    <!-- About Section -->
+    <section class="about-section">
+        <h2>About Us</h2>
+        <p>Fashion Fushion is an innovative web application that utilizes cutting-edge artificial intelligence (AI)
+            technology to revolutionize the way people customize their clothing. By seamlessly integrating AI algorithms
+            with the fashion industry, Fashion Fushion empowers users to create unique, personalized garments tailored
+            to their individual preferences and style.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Footer content goes here -->
+    </footer>
+
+    <!-- Modal for Product Details -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="Product Image" style="width: 100%;">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <!-- Link to your JavaScript file -->
+    <script src="script.js"></script>
+    <script>
+
+
+        function generateRandomCosts() {
+            var products = document.querySelectorAll('.product');
+            products.forEach(function (product, index) {
+                var cost = Math.floor(Math.random() * 100) + 10; // Generate random cost between 10 and 100
+                product.querySelector('.product-cost').textContent = '$' + cost;
+            });
+        }
+
+        // Call the function when the page loads
+        window.addEventListener('load', generateRandomCosts);
+
+        // Function to handle "Add to Cart" button click
+        function addToCart() {
+            // Redirect to the Add to Cart page
+            window.location.href = "cart.html"; // Replace with your actual cart page URL
+        }
+
+        function addToModify() {
+            window.location.href = "modify/index.html"
+        }
+
+        // Function to filter products based on selected criteria
+        function filterProducts() {
+            var filterCriterion = document.getElementById("filterDropdown").value;
+            // Implement filtering logic based on the selected criterion
+            // For example: If filterCriterion is "category", filter products by category
+        }
+
+        // Function to sort products based on selected criteria
+        function sortProducts() {
+            var sortCriterion = document.getElementById("sortDropdown").value;
+            // Implement sorting logic based on the selected criterion
+            // For example: If sortCriterion is "ascending", sort products in ascending order by price
+        }
+
+        // Function to open the modal with product details
+        function openModal(imageSrc, title, description) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("modalImage");
+            var modalTitle = document.getElementById("modalTitle");
+            var modalDescription = document.getElementById("modalDescription");
+
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+            modalTitle.innerText = title;
+            modalDescription.innerText = description;
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        // Function to handle search functionality
+        function searchProducts() {
+            var input = document.getElementById("searchInput").value.toLowerCase();
+            var products = document.getElementsByClassName("product");
+
+            for (var i = 0; i < products.length; i++) {
+                var title = products[i].getElementsByTagName("img")[0].alt.toLowerCase();
+                if (title.indexOf(input) > -1) {
+                    products[i].style.display = "";
+                } else {
+                    products[i].style.display = "none";
+                }
+            }
+        }
+
+        // Function to filter products based on selected criteria
+        function filterProducts() {
+            var filterCriterion = document.getElementById("filterDropdown").value;
+            var products = document.querySelectorAll('.product');
+
+            products.forEach(function (product) {
+                product.style.display = ""; // Reset display property for all products
+            });
+
+            if (filterCriterion === "category") {
+                // Implement filtering logic based on category
+                // Example: Hide products not matching selected category
+            } else if (filterCriterion === "price") {
+                // Implement filtering logic based on price
+                // Example: Hide products above certain price range
+            } else if (filterCriterion === "popularity") {
+                // Implement filtering logic based on popularity
+                // Example: Hide less popular products
+            }
+        }
+
+        function filterProducts() {
+            var filterCriterion = document.getElementById("filterDropdown").value;
+            var products = document.querySelectorAll('.product');
+            var cost = document.getElementsByClassName('.product-cost')
+            products.forEach(function (product) {
+                product.style.display = ""; // Reset display property for all products
+            });
+
+            if (filterCriterion === "category") {
+                // Implement filtering logic based on category
+                // Example: Hide products not matching selected category
+            } else if (filterCriterion === "price") {
+                // Implement filtering logic based on price
+                // Example: Hide products above certain price range
+                if (cost > 56) {
+                    products.style.display = none;
+                }
+            } else if (filterCriterion === "popularity") {
+                // Implement filtering logic based on popularity
+                // Example: Hide less popular products
+            }
+        }
+
+        // Function to sort products based on selected criteria
+        function sortProducts() {
+            var sortCriterion = document.getElementById("sortDropdown").value;
+            var productsContainer = document.querySelector('.product-container');
+            var products = document.querySelectorAll('.product');
+
+            var sortedProducts = Array.from(products);
+
+            if (sortCriterion === "ascending") {
+                sortedProducts.sort(function (a, b) {
+                    // Sort products in ascending order based on price
+                    var priceA = parseInt(a.querySelector('.product-cost').textContent.slice(1)); // Remove $ sign and parse as integer
+                    var priceB = parseInt(b.querySelector('.product-cost').textContent.slice(1));
+                    return priceA - priceB;
+                });
+            } else if (sortCriterion === "descending") {
+                sortedProducts.sort(function (a, b) {
+                    // Sort products in descending order based on price
+                    var priceA = parseInt(a.querySelector('.product-cost').textContent.slice(1)); // Remove $ sign and parse as integer
+                    var priceB = parseInt(b.querySelector('.product-cost').textContent.slice(1));
+                    return priceB - priceA;
+                });
+            }
+
+            // Reorder products based on sorted array
+            productsContainer.innerHTML = "";
+            sortedProducts.forEach(function (product) {
+                productsContainer.appendChild(product);
+            });
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
