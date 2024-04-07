@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Clothing Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .clothing-item {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #clothing-image {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .control {
+            margin: 0 10px;
+        }
+
+        #color-picker,
+        #size-selection,
+        #pattern-selection {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            outline: none;
+        }
+
+        #color-picker:hover,
+        #size-selection:hover,
+        #pattern-selection:hover {
+            border-color: #999;
+        }
+
+        #color-picker:focus,
+        #size-selection:focus,
+        #pattern-selection:focus {
+            border-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="clothing-item">
+            <img id="clothing-image" src="C:\Users\skoya\Downloads\hoody-white-sweatshirt-mock-up-front-back-set\hoodie2.jpg" alt="Clothing">
+        </div>
+
+        <div class="controls">
+            <div class="control">
+                <label for="color-picker">Color:</label>
+                <input type="color" id="color-picker">
+            </div>
+            <div class="control">
+                <label for="size-selection">Size:</label>
+                <select id="size-selection">
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+            <div class="control">
+                <label for="pattern-selection">Pattern:</label>
+                <select id="pattern-selection">
+                    <option value="none">None</option>
+                    <option value="stripes">Stripes</option>
+                    <option value="polka-dots">Polka Dots</option>
+                    <option value="floral">Floral</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const clothingImage = document.getElementById('clothing-image');
+        const colorPicker = document.getElementById('color-picker');
+        const sizeSelection = document.getElementById('size-selection');
+        const patternSelection = document.getElementById('pattern-selection');
+
+        colorPicker.addEventListener('change', () => {
+            clothingImage.style.filter = `hue-rotate(${colorPicker.value})`;
+        });
+
+        sizeSelection.addEventListener('change', () => {
+            const selectedSize = sizeSelection.value;
+            if (selectedSize === 'small') {
+                clothingImage.src = 'small_image.jpg';
+            } else if (selectedSize === 'medium') {
+                clothingImage.src = 'medium_image.jpg';
+            } else if (selectedSize === 'large') {
+                clothingImage.src = 'large_image.jpg';
+            }
+        });
+
+        patternSelection.addEventListener('change', () => {
+            const selectedPattern = patternSelection.value;
+            if (selectedPattern === 'none') {
+                clothingImage.style.backgroundImage = 'none';
+            } else {
+                clothingImage.style.backgroundImage = `url(${selectedPattern}.jpg)`;
+            }
+        });
+    </script>
+</body>
+</html>
+

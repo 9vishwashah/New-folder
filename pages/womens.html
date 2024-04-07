@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Selection</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .product {
+            margin-bottom: 20px;
+            width: calc(20% - 20px);
+            max-width: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 0 0 10px 10px;
+            padding: 10px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WOMENS</h1>
+        <div class="product-container">
+            <div class="product">
+                <img src="product1.jpg" alt="Product 1">
+                <button class="button" onclick="addToCart('product1')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="product2.jpg" alt="Product 2">
+                <button class="button" onclick="addToCart('product2')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="product3.jpg" alt="Product 3">
+                <button class="button" onclick="addToCart('product3')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="product4.jpg" alt="Product 4">
+                <button class="button" onclick="addToCart('product4')">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="product5.jpg" alt="Product 5">
+                <button class="button" onclick="addToCart('product5')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addToCart(productName) {
+            // Perform any action you want when adding a product to the cart, such as storing it in local storage
+            console.log('Added ' + productName + ' to cart');
+            // Redirect to the cart page
+            window.location.href = 'cart.html';
+        }
+    </script>
+</body>
+</html>
+
